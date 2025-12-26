@@ -49,27 +49,22 @@
   <button onclick="mostrarSignificado()">🎨 ¿Quieres saber qué representa?</button>
   <button onclick="mostrarProceso()">🛠️ ¿Cómo fue creado?</button>
   <button onclick="mostrarChat()">💬 Hacer una pregunta libre</button>
-  <div id="chat" style="display:none; margin-top:20px;">
-  <input
+   <div id="chat" style="display:none; margin-top:20px;">
+    <input
     type="text"
     id="pregunta"
     placeholder="Escriba su pregunta sobre este objeto..."
     style="width:100%; padding:10px; font-size:16px;"
-  />
-  <button onclick="enviarPregunta()" style="margin-top:10px;">
+    />
+    <button onclick="enviarPregunta()" style="margin-top:10px;">
     Enviar pregunta
-  </button>
+    </button>
 
-  <div id="respuestaChat" style="margin-top:15px; background:#f0f0f0; padding:10px; border-radius:6px;">
-    <em>Aquí aparecerá la respuesta.</em>
-  </div>
-</div>
+    <div id="respuestaChat" style="margin-top:15px; background:#f0f0f0; padding:10px; border-radius:6px;">
+      <em>Aquí aparecerá la respuesta.</em>
+    </div>
+   </div>
 
-
-  <div id="respuesta">
-    <em>Seleccione una opción para ver la información.</em>
-  </div>
-</div>
 
 <script>
   let contenido = {};
