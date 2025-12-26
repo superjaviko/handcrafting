@@ -3,9 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <title>Objeto Artesanal Interactivo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    h1 {
+      text-align: center;
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      margin: 8px 0;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #respuesta {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #eee;
+      border-radius: 6px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Bienvenido</h1>
-  <p>Este es un objeto artesanal interactivo.</p>
+
+<div class="container">
+  <h1>Objeto Artesanal</h1>
+
+  <p>
+    Bienvenido. Este objeto contiene una historia especial.  
+    Seleccione una opción para conocer más.
+  </p>
+
+  <button onclick="mostrarHistoria()">📜 Historia del objeto</button>
+  <button onclick="mostrarSignificado()">🎨 ¿Qué representa?</button>
+  <button onclick="mostrarProceso()">🛠️ ¿Cómo fue creado?</button>
+  <button onclick="mostrarChat()">💬 Hacer una pregunta libre</button>
+
+  <div id="respuesta">
+    <em>Seleccione una opción para ver la información.</em>
+  </div>
+</div>
+
+<script>
+  function mostrarHistoria() {
+    document.getElementById("respuesta").innerText =
+      "Este objeto fue creado a mano por un artesano local utilizando técnicas tradicionales transmitidas por generaciones.";
+  }
+
+  function mostrarSignificado() {
+    document.getElementById("respuesta").innerText =
+      "Los símbolos y colores de este objeto representan protección, identidad cultural y conexión con la naturaleza.";
+  }
+
+  function mostrarProceso() {
+    document.getElementById("respuesta").innerText =
+      "El proceso de creación tomó varios días e incluyó la selección de materiales naturales, moldeado manual y acabados artesanales.";
+  }
+
+  function mostrarChat() {
+    document.getElementById("respuesta").innerText =
+      "Próximamente podrá hacer preguntas libres sobre este objeto.";
+  }
+</script>
+
 </body>
 </html>
