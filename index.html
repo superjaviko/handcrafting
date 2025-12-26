@@ -95,7 +95,7 @@
   document.getElementById("chat").style.display = "block";
 }
   
-  function enviarPregunta() {
+  async function enviarPregunta() {
   const pregunta = document.getElementById("pregunta").value;
 
   if (!pregunta) {
@@ -103,6 +103,29 @@
       "Por favor, escriba una pregunta.";
     return;
   }
+
+  document.getElementById("respuestaChat").innerText =
+    "Pensando...";
+
+  const contenidoObjeto = `
+Historia: ${contenido.historia}
+Significado: ${contenido.significado}
+Proceso: ${contenido.proceso}
+Artesano: ${contenido.artesano}
+  `;
+
+  const response = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      pregunta: pregunta,
+      contenido: contenidoObjeto
+    })
+  });
+
+  const data = await response.json();
+  document.getElementById("respuestaChat").innerText = data.respuesta;
+}
 
   document.getElementById("respuestaChat").innerText =
     "Gracias por su pregunta. En el siguiente paso, esta respuesta será generada por inteligencia artificial usando la información real del objeto.";
