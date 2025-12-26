@@ -95,7 +95,7 @@
   document.getElementById("chat").style.display = "block";
 }
   
-  async function enviarPregunta() {
+async function enviarPregunta() {
   const pregunta = document.getElementById("pregunta").value;
 
   if (!pregunta) {
@@ -126,7 +126,6 @@ Artesano: ${contenido.artesano}
   const data = await response.json();
   document.getElementById("respuestaChat").innerText = data.respuesta;
 }
-
   document.getElementById("respuestaChat").innerText =
     "Gracias por su pregunta. En el siguiente paso, esta respuesta será generada por inteligencia artificial usando la información real del objeto.";
 }
