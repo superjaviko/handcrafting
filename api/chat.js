@@ -1,0 +1,35 @@
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Método no permitido" });
+  }
+
+  const { pregunta, contenido } = req.body;
+
+  const prompt = `
+Eres el narrador de un objeto artesanal.
+Responde únicamente usando la información proporcionada.
+Si no encuentras la respuesta, indícalo con respeto.
+
+INFORMACIÓN DEL OBJETO:
+${contenido}
+
+PREGUNTA DEL USUARIO:
+${pregunta}
+`;
+
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
+    },
+    body: JSON.stringify({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0.3
+    })
+  });
+
+  const data = await response.json();
+  res.status(200).json({ respuesta: data.choices[0].message.content });
+}
