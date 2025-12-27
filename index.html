@@ -60,11 +60,9 @@
     Enviar pregunta
     </button>
 
-    <div id="respuestaChat" style="margin-top:15px; background:#f0f0f0; padding:10px; border-radius:6px;">
-      <em>Aquí aparecerá la respuesta.</em>
-    </div>
-   </div>
-
+    <div id="respuesta">
+  <em>Seleccione una opción para ver la información.</em>
+</div>
 
 <script>
   let contenido = {};
@@ -125,9 +123,6 @@ Artesano: ${contenido.artesano}
 
   const data = await response.json();
   document.getElementById("respuestaChat").innerText = data.respuesta;
-}
-  document.getElementById("respuestaChat").innerText =
-    "Gracias por su pregunta. En el siguiente paso, esta respuesta será generada por inteligencia artificial usando la información real del objeto.";
 }
 
 </script>
