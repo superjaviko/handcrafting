@@ -111,7 +111,7 @@ function mostrarChat() {
   
 function hablar(texto) {
   const speech = new SpeechSynthesisUtterance(texto);
-  speech.lang = "es-ES";
+  speech.lang = "it-IT";
   speech.rate = 0.95;
   speech.pitch = 1;
   window.speechSynthesis.speak(speech);
@@ -127,7 +127,7 @@ function iniciarVoz() {
     window.SpeechRecognition || window.webkitSpeechRecognition;
 
   const recognition = new SpeechRecognition();
-  recognition.lang = "es-ES";
+  recognition.lang = "it-IT";
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
 
