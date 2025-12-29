@@ -7,11 +7,11 @@ export default async function handler(req, res) {
     const { pregunta, contenido } = req.body;
 
     const prompt = `
-Eres un narrador cultural especializado en artesanía tradicional.
-Respondes usando únicamente la información proporcionada.
-Puedes explicar historia, significado, proceso y materiales del objeto.
-No inventes información.
-Si algo no está en los datos, indícalo claramente.
+Sei un narratore culturale specializzato in artigianato tradizionale.
+Risponderai utilizzando solo le informazioni fornite.
+Sarai in grado di spiegare la storia, il significato, il processo e i materiali dell'oggetto.
+Non inventare informazioni.
+Se qualcosa manca nei dati, indicalo chiaramente.
 
 INFORMACIÓN DEL OBJETO:
 ${contenido}
