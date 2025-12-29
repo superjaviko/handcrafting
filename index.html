@@ -50,6 +50,8 @@
 <button onclick="mostrarSignificado()">🎨 Cosa rappresenta?</button>
 <button onclick="mostrarProceso()">🛠️ Come è stato creato?</button>
 <button onclick="mostrarChat()">💬 Domanda libre</button>
+<button onclick="iniciarVoz()">🎤 Chiedi usando la tua voce</button>
+
 
 <!-- CONTENIDO DEL OBJETO (SIEMPRE VISIBLE) -->
 <div id="contenidoObjeto" style="margin-top:20px;">
@@ -106,6 +108,47 @@ function mostrarProceso() {
 function mostrarChat() {
   document.getElementById("chat").style.display = "block";
 }
+  
+function hablar(texto) {
+  const speech = new SpeechSynthesisUtterance(texto);
+  speech.lang = "es-ES";
+  speech.rate = 0.95;
+  speech.pitch = 1;
+  window.speechSynthesis.speak(speech);
+}
+
+function iniciarVoz() {
+  if (!("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) {
+    alert("Il riconoscimento vocale non è disponibile in questo browser.");
+    return;
+  }
+
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = "es-ES";
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.start();
+
+  document.getElementById("contenidoObjeto").innerText =
+    "Ascoltando... Puoi porre la tua domanda.";
+
+  recognition.onresult = function (event) {
+    const texto = event.results[0][0].transcript;
+    document.getElementById("pregunta").value = texto;
+    mostrarChat();
+    enviarPregunta();
+  };
+
+  recognition.onerror = function () {
+    document.getElementById("contenidoObjeto").innerText =
+      "Impossibile riconoscere la voce. Riprova.";
+  };
+}
+
 
 async function enviarPregunta() {
   const pregunta = document.getElementById("pregunta").value;
@@ -130,6 +173,7 @@ Artesano: ${contenido.artesano}
 
   const data = await response.json();
   document.getElementById("respuestaChat").innerText = data.respuesta;
+  hablar(data.respuesta);
 }
 </script>
 
