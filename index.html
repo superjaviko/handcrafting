@@ -46,38 +46,49 @@
     Seleccione una opción para conocer más.
   </p>
     
-  <button onclick="mostrarHistoria()">📜 Historia del objeto</button>
-  <button onclick="mostrarSignificado()">🎨 ¿Quieres saber qué representa?</button>
-  <button onclick="mostrarProceso()">🛠️ ¿Cómo fue creado?</button>
-  <button onclick="mostrarChat()">💬 Hacer una pregunta libre</button>
-  <div id="chat" style="display:none; margin-top:20px;">
-   <input
-   type="text"
-   id="pregunta"
-   placeholder="Escriba su pregunta sobre este objeto..."
-   style="width:100%; padding:10px; font-size:16px;"
-   />
+<button onclick="mostrarHistoria()">📜 Historia del objeto</button>
+<button onclick="mostrarSignificado()">🎨 ¿Qué representa?</button>
+<button onclick="mostrarProceso()">🛠️ ¿Cómo fue creado?</button>
+<button onclick="mostrarChat()">💬 Pregunta libre</button>
+
+<!-- CONTENIDO DEL OBJETO (SIEMPRE VISIBLE) -->
+<div id="contenidoObjeto" style="margin-top:20px;">
+  <em>Seleccione una opción para ver la información.</em>
+</div>
+
+<!-- CHAT (OCULTO POR DEFECTO) -->
+<div id="chat" style="display:none; margin-top:20px;">
+  <input
+    type="text"
+    id="pregunta"
+    placeholder="Escriba su pregunta sobre este objeto..."
+    style="width:100%; padding:10px;"
+  />
+
   <button onclick="enviarPregunta()" style="margin-top:10px;">
-   Enviar pregunta
+    Enviar pregunta
   </button>
 
-  <div id="contenidoObjeto" style="margin-top:20px;">
-  <em>Seleccione una opción para ver la información.</em>
+  <div id="respuestaChat" style="margin-top:10px; background:#eee; padding:10px;">
+    <em>Aquí aparecerá la respuesta.</em>
   </div>
+</div>
 
 
 <script>
-  let contenido = {};
+let contenido = {};
 
-  fetch("contenido.json")
-    .then(response => response.json())
-    .then(data => {
-      contenido = data;
-      document.querySelector("h1").innerText = contenido.titulo;
-      document.querySelector("p").innerText = contenido.bienvenida;
-    });
+fetch("contenido.json")
+  .then(r => r.json())
+  .then(data => {
+    contenido = data;
+  });
 
-  function mostrarHistoria() {
+function ocultarChat() {
+  document.getElementById("chat").style.display = "none";
+}
+
+function mostrarHistoria() {
   ocultarChat();
   document.getElementById("contenidoObjeto").innerText = contenido.historia;
 }
@@ -91,41 +102,27 @@ function mostrarProceso() {
   ocultarChat();
   document.getElementById("contenidoObjeto").innerText = contenido.proceso;
 }
-function ocultarChat() {
-  document.getElementById("chat").style.display = "none";
-}
 
-  function mostrarChat() {
-  document.getElementById("contenidoObjeto").innerText =
-    "Puede escribir una pregunta libre sobre este objeto.";
+function mostrarChat() {
   document.getElementById("chat").style.display = "block";
 }
-  
+
 async function enviarPregunta() {
   const pregunta = document.getElementById("pregunta").value;
+  if (!pregunta) return;
 
-  if (!pregunta) {
-    document.getElementById("respuestaChat").innerText =
-      "Por favor, escriba una pregunta.";
-    return;
-  }
-
-  document.getElementById("respuestaChat").innerText =
-    "Pensando...";
-
-  const contenidoObjeto = `
-Historia: ${contenido.historia}
-Significado: ${contenido.significado}
-Proceso: ${contenido.proceso}
-Artesano: ${contenido.artesano}
-  `;
+  document.getElementById("respuestaChat").innerText = "Pensando...";
 
   const response = await fetch("/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      pregunta: pregunta,
-      contenido: contenidoObjeto
+      pregunta,
+      contenido: `
+Historia: ${contenido.historia}
+Significado: ${contenido.significado}
+Proceso: ${contenido.proceso}
+`
     })
   });
 
@@ -133,6 +130,7 @@ Artesano: ${contenido.artesano}
   document.getElementById("respuestaChat").innerText = data.respuesta;
 }
 </script>
+
 
 </body>
 </html>
