@@ -109,46 +109,46 @@ function mostrarChat() {
   document.getElementById("chat").style.display = "block";
 }
   
-function hablar(texto) {
-  const speech = new SpeechSynthesisUtterance(texto);
+function hablar(testo) {
+  const speech = new SpeechSynthesisUtterance(testo);
   speech.lang = "it-IT";
   speech.rate = 0.95;
   speech.pitch = 1;
   window.speechSynthesis.speak(speech);
 }
-
+  
 function iniciarVoz() {
-  if (!("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) {
-    alert("Il riconoscimento vocale non è disponibile in questo browser.");
-    return;
-  }
-
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
 
+  if (!SpeechRecognition) {
+    alert("Il riconoscimento vocale non è disponibile su questo browser.");
+    return;
+  }
+
   const recognition = new SpeechRecognition();
   recognition.lang = "it-IT";
+  recognition.continuous = false;
   recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
 
   recognition.start();
 
   document.getElementById("contenidoObjeto").innerText =
-    "Ascoltando... Puoi porre la tua domanda.";
+    "🎤 In ascolto... parli ora.";
 
-  recognition.onresult = function (event) {
-    const texto = event.results[0][0].transcript;
-    document.getElementById("pregunta").value = texto;
+  recognition.onresult = (event) => {
+    const testo = event.results[0][0].transcript;
+    document.getElementById("pregunta").value = testo;
     mostrarChat();
     enviarPregunta();
   };
 
-  recognition.onerror = function () {
+  recognition.onerror = (event) => {
     document.getElementById("contenidoObjeto").innerText =
-      "Impossibile riconoscere la voce. Riprova.";
+      "Non è stata rilevata alcuna voce. Parli chiaramente e riprovi.";
+    console.error("Speech error:", event.error);
   };
 }
-
 
 async function enviarPregunta() {
   const pregunta = document.getElementById("pregunta").value;
