@@ -1,6 +1,9 @@
 {
   "titulo": "Objeto Artesanal",
+  
   "bienvenida": "Benvenuti. Questo articolo ha una storia speciale. Seleziona un'opzione per saperne di più.",
+  
+  "artesano": "Javier Suárez",
 
   "historia": "Este objeto fue creado a mano por un artesano local utilizando técnicas tradicionales transmitidas por generaciones.",
 
@@ -10,8 +13,8 @@
 
   "artesano": "El artesano pertenece a una comunidad que mantiene vivas las tradiciones culturales de su región.",
 
-  "Materiales": "El objeto fue contruido con arcilla de la mas alta calidad, favoreciendo a su durabilidad y flexibilidad.",
+  "materiales": "Madera de cedro, fibras naturales y pigmentos minerales",
 
-  "Tiempo": "El objeto fue construido en el mes de diciembre del 2025."
+  "tiempo": "El objeto fue construido en el mes de diciembre del 2025."
   
 }
