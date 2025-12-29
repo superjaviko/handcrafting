@@ -61,9 +61,10 @@
     Enviar pregunta
     </button>
 
-  <div id="respuesta">
+  <div id="contenidoObjeto" style="margin-top:20px;">
   <em>Seleccione una opción para ver la información.</em>
-  </div>
+</div>
+
 
 <script>
   let contenido = {};
@@ -77,20 +78,26 @@
     });
 
   function mostrarHistoria() {
-    document.getElementById("respuesta").innerText = contenido.historia;
-  }
+  ocultarChat();
+  document.getElementById("contenidoObjeto").innerText = contenido.historia;
+}
 
-  function mostrarSignificado() {
-    document.getElementById("respuesta").innerText = contenido.significado;
-  }
+function mostrarSignificado() {
+  ocultarChat();
+  document.getElementById("contenidoObjeto").innerText = contenido.significado;
+}
 
-  function mostrarProceso() {
-    document.getElementById("respuesta").innerText = contenido.proceso;
-  }
+function mostrarProceso() {
+  ocultarChat();
+  document.getElementById("contenidoObjeto").innerText = contenido.proceso;
+}
+function ocultarChat() {
+  document.getElementById("chat").style.display = "none";
+}
 
   function mostrarChat() {
-  document.getElementById("respuesta").innerText =
-    "Escriba una pregunta libre sobre este objeto.";
+  document.getElementById("contenidoObjeto").innerText =
+    "Puede escribir una pregunta libre sobre este objeto.";
   document.getElementById("chat").style.display = "block";
 }
   
