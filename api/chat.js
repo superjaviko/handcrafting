@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   const prompt = `
 Eres el narrador de un objeto artesanal.
 Responde únicamente usando la información proporcionada.
-Si no encuentras la respuesta, indícalo con respeto.
+Si no encuentras la respuesta, indícalo con respeto y amablemente.
 
 INFORMACIÓN DEL OBJETO:
 ${contenido}
