@@ -92,6 +92,11 @@ let audioChunks = [];
 async function iniciarGrabacion() {
   audioChunks = [];
 
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    alert("Il tuo browser non supporta la registrazione audio.");
+    return;
+  }
+
   const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
   mediaRecorder = new MediaRecorder(stream);
@@ -109,11 +114,11 @@ async function iniciarGrabacion() {
     enviarAudio(audioBlob);
   };
 
-  // Grabamos 5 segundos (ajustable)
   setTimeout(() => {
     mediaRecorder.stop();
   }, 5000);
 }
+
 
 function ocultarChat() {
   document.getElementById("chat").style.display = "none";
@@ -199,6 +204,12 @@ Artesano: ${contenido.artesano}
 `
     })
   });
+
+  const data = await response.json();
+  document.getElementById("respuestaChat").innerText = data.respuesta;
+  hablar(data.respuesta);
+}
+
 async function enviarAudio(audioBlob) {
   document.getElementById("contenidoObjeto").innerText =
     "⏳ Elaborazione della domanda…";
@@ -224,10 +235,6 @@ async function enviarAudio(audioBlob) {
   enviarPregunta();
 }
 
-  const data = await response.json();
-  document.getElementById("respuestaChat").innerText = data.respuesta;
-  hablar(data.respuesta);
-}
 </script>
 
 
