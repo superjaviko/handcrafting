@@ -164,7 +164,7 @@ function iniciarVoz() {
     window.SpeechRecognition || window.webkitSpeechRecognition;
 
   if (!SpeechRecognition) {
-    alert("Il riconoscimento vocale non è disponibile su questo browser.");
+    alert("Il riconoscimento vocale non è supportato su questo dispositivo.");
     return;
   }
 
@@ -172,14 +172,16 @@ function iniciarVoz() {
   recognition.lang = "it-IT";
   recognition.continuous = false;
   recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
 
   recognition.start();
 
   document.getElementById("contenidoObjeto").innerText =
-    "🎤 In ascolto... parli ora.";
+    "🎤 In ascolto… parli ora.";
 
   recognition.onresult = (event) => {
     const testo = event.results[0][0].transcript;
+
     document.getElementById("pregunta").value = testo;
     mostrarChat();
     enviarPregunta();
@@ -187,8 +189,12 @@ function iniciarVoz() {
 
   recognition.onerror = (event) => {
     document.getElementById("contenidoObjeto").innerText =
-      "Non è stata rilevata alcuna voce. Parli chiaramente e riprovi.";
+      "❌ Nessuna voce rilevata. Riprovi.";
     console.error("Speech error:", event.error);
+  };
+
+  recognition.onend = () => {
+    console.log("Speech recognition ended");
   };
 }
 
