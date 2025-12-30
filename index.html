@@ -50,7 +50,7 @@
 <button onclick="mostrarSignificado()">🎨 Cosa rappresenta?</button>
 <button onclick="mostrarProceso()">🛠️ Come è stato creato?</button>
 <button onclick="mostrarChat()">💬 Domanda libre</button>
-<button onclick="iniciarVoz()">🎤 Chiedi usando la tua voce</button>
+<button onclick="iniciarGrabacion()">🎤 Parlare</button>
 
 
 <!-- CONTENIDO DEL OBJETO (SIEMPRE VISIBLE) -->
@@ -85,6 +85,35 @@ fetch("contenido.json")
   .then(data => {
     contenido = data;
   });
+
+let mediaRecorder;
+let audioChunks = [];
+
+async function iniciarGrabacion() {
+  audioChunks = [];
+
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+  mediaRecorder = new MediaRecorder(stream);
+  mediaRecorder.start();
+
+  document.getElementById("contenidoObjeto").innerText =
+    "🎤 Registrazione in corso… parli ora.";
+
+  mediaRecorder.ondataavailable = (event) => {
+    audioChunks.push(event.data);
+  };
+
+  mediaRecorder.onstop = () => {
+    const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+    enviarAudio(audioBlob);
+  };
+
+  // Grabamos 5 segundos (ajustable)
+  setTimeout(() => {
+    mediaRecorder.stop();
+  }, 5000);
+}
 
 function ocultarChat() {
   document.getElementById("chat").style.display = "none";
@@ -170,6 +199,30 @@ Artesano: ${contenido.artesano}
 `
     })
   });
+async function enviarAudio(audioBlob) {
+  document.getElementById("contenidoObjeto").innerText =
+    "⏳ Elaborazione della domanda…";
+
+  const formData = new FormData();
+  formData.append("file", audioBlob, "domanda.webm");
+
+  const response = await fetch("/api/transcribe", {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await response.json();
+
+  if (!data.texto) {
+    document.getElementById("contenidoObjeto").innerText =
+      "❌ Non è stato possibile comprendere la voce.";
+    return;
+  }
+
+  document.getElementById("pregunta").value = data.texto;
+  mostrarChat();
+  enviarPregunta();
+}
 
   const data = await response.json();
   document.getElementById("respuestaChat").innerText = data.respuesta;
