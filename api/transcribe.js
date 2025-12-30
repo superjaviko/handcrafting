@@ -18,8 +18,8 @@ export default async function handler(req, res) {
   try {
     const buffer = Buffer.from(await req.arrayBuffer());
 
-    const file = new File([buffer], "audio.webm", {
-      type: "audio/webm"
+    const file = new File([buffer], "audio", {
+      type: req.headers["content-type"] || "audio/mpeg"
     });
 
     const transcription = await openai.audio.transcriptions.create({
@@ -34,4 +34,3 @@ export default async function handler(req, res) {
     res.status(500).json({ error: "Errore trascrizione audio" });
   }
 }
-
