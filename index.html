@@ -110,9 +110,18 @@ async function iniciarGrabacion() {
   };
 
   mediaRecorder.onstop = () => {
-    const audioBlob = new Blob(audioChunks);
-    enviarAudio(audioBlob);
-  };
+  console.log("Chunks:", audioChunks.length);
+  console.log("Size:", audioChunks.reduce((s, b) => s + b.size, 0));
+
+  if (audioChunks.length === 0) {
+    document.getElementById("contenidoObjeto").innerText =
+      "❌ Nessun audio registrato dal browser.";
+    return;
+  }
+
+  const audioBlob = new Blob(audioChunks);
+  enviarAudio(audioBlob);
+};
 
   setTimeout(() => {
     mediaRecorder.stop();
