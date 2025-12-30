@@ -110,7 +110,7 @@ async function iniciarGrabacion() {
   };
 
   mediaRecorder.onstop = () => {
-    const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+    const audioBlob = new Blob(audioChunks);
     enviarAudio(audioBlob);
   };
 
@@ -215,7 +215,7 @@ async function enviarAudio(audioBlob) {
     "⏳ Elaborazione della domanda…";
 
   const formData = new FormData();
-  formData.append("file", audioBlob, "domanda.webm");
+  formData.append("file", audioBlob, "audio");
 
   const response = await fetch("/api/transcribe", {
     method: "POST",
