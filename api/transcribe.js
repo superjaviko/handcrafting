@@ -1,7 +1,4 @@
-import fs from "fs";
-import path from "path";
-import formidable from "formidable";
-import fetch from "node-fetch";
+import OpenAI from "openai";
 
 export const config = {
   api: {
@@ -9,41 +6,32 @@ export const config = {
   }
 };
 
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Metodo non consentito" });
   }
 
-  const form = formidable();
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      return res.status(500).json({ error: "Errore upload audio" });
-    }
+  try {
+    const buffer = Buffer.from(await req.arrayBuffer());
 
-    const audioFile = files.file[0];
-    const filePath = audioFile.filepath;
+    const file = new File([buffer], "audio.webm", {
+      type: "audio/webm"
+    });
 
-    const audioData = fs.createReadStream(filePath);
+    const transcription = await openai.audio.transcriptions.create({
+      file,
+      model: "whisper-1",
+      language: "it"
+    });
 
-    const whisperResponse = await fetch(
-      "https://api.openai.com/v1/audio/transcriptions",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`
-        },
-        body: (() => {
-          const fd = new FormData();
-          fd.append("file", audioData);
-          fd.append("model", "whisper-1");
-          fd.append("language", "it");
-          return fd;
-        })()
-      }
-    );
-
-    const result = await whisperResponse.json();
-
-    res.status(200).json({ texto: result.text });
-  });
+    res.status(200).json({ texto: transcription.text });
+  } catch (error) {
+    console.error("Errore Whisper:", error);
+    res.status(500).json({ error: "Errore trascrizione audio" });
+  }
 }
+
