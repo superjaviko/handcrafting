@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Oggetto interattivo fatto a mano</title>
   <style>
     body {
@@ -38,20 +38,19 @@
 <body>
 
 <div class="container">
-  <div class="container">
   <h1>Oggetto fatto a mano</h1>
 
   <p>
     Benvenuti. Questo articolo ha una storia speciale. 
     Seleziona un'opzione per saperne di più
   </p>
-    
-<button onclick="mostrarHistoria()">📜 Storia del Ogetto</button>
-<button onclick="mostrarSignificado()">🎨 Cosa rappresenta?</button>
-<button onclick="mostrarProceso()">🛠️ Come è stato creato?</button>
-<button onclick="mostrarChat()">💬 Domanda libre</button>
-<button onclick="iniciarVoz()">🎤 Parlare</button>
-
+ <div class="actions">   
+  <button onclick="mostrarHistoria()">📜 Storia del Ogetto</button>
+  <button onclick="mostrarSignificado()">🎨 Cosa rappresenta?</button>
+  <button onclick="mostrarProceso()">🛠️ Come è stato creato?</button>
+  <button onclick="mostrarChat()">💬 Domanda libre</button>
+  <button onclick="iniciarVoz()">🎤 Parlare</button>
+ </div>
 <!-- CONTENIDO DEL OBJETO (SIEMPRE VISIBLE) -->
 <div id="contenidoObjeto" style="margin-top:20px;">
   <em>Seleziona un'opzione per visualizzare le informazioni.</em>
