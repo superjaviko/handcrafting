@@ -33,6 +33,22 @@
       background-color: #eee;
       border-radius: 6px;
     }
+    .hidden {
+      display: none;
+    }
+
+    .chat input {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+     #btnInvia {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -138,7 +154,6 @@ async function iniciarGrabacion() {
   }, 5000);
 }
 
-
 function ocultarChat() {
   document.getElementById("chat").style.display = "none";
 }
@@ -159,7 +174,8 @@ function mostrarProceso() {
 }
 
 function mostrarChat() {
-  document.getElementById("chat").style.display = "block";
+  document.getElementById("chat").classList.remove("hidden");
+  document.getElementById("btnInvia").style.display = "block";
 }
   
 function hablar(testo) {
@@ -171,11 +187,17 @@ function hablar(testo) {
 }
   
 function iniciarVoz() {
+  document.getElementById("chat").classList.remove("hidden");
+
+  // OCULTAR BOTÓN EN MODO VOZ
+  document.getElementById("btnInvia").style.display = "none";
+
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
 
   if (!SpeechRecognition) {
-    alert("Il riconoscimento vocale non è supportato su questo dispositivo.");
+    document.getElementById("contenidoObjeto").innerText =
+      "Il riconoscimento vocale non è disponibile su questo dispositivo.";
     return;
   }
 
@@ -183,7 +205,6 @@ function iniciarVoz() {
   recognition.lang = "it-IT";
   recognition.continuous = false;
   recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
 
   recognition.start();
 
@@ -192,23 +213,24 @@ function iniciarVoz() {
 
   recognition.onresult = (event) => {
     const testo = event.results[0][0].transcript;
-
     document.getElementById("pregunta").value = testo;
-    mostrarChat();
+
+    // ENVÍO AUTOMÁTICO (SIN BOTÓN)
     enviarPregunta();
   };
 
-  recognition.onerror = (event) => {
+  recognition.onerror = () => {
     document.getElementById("contenidoObjeto").innerText =
       "❌ Nessuna voce rilevata. Riprovi.";
-    console.error("Speech error:", event.error);
-  };
-
-  recognition.onend = () => {
-    console.log("Speech recognition ended");
   };
 }
-
+  
+function mostrarInvia() {
+  const texto = document.getElementById("pregunta").value.trim();
+  if (texto.length > 0) {
+    document.getElementById("btnInvia").style.display = "block";
+  }
+}
 async function enviarPregunta() {
   const pregunta = document.getElementById("pregunta").value;
   if (!pregunta) return;
