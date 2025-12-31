@@ -41,29 +41,41 @@
   <h1>Oggetto fatto a mano</h1>
 
   <p>
-    Benvenuti. Questo articolo ha una storia speciale. 
+    Benvenuti. Questo articolo ha una storia speciale.
     Seleziona un'opzione per saperne di più
   </p>
- <div class="actions">   
-  <button onclick="mostrarHistoria()">📜 Storia del Ogetto</button>
-  <button onclick="mostrarSignificado()">🎨 Cosa rappresenta?</button>
-  <button onclick="mostrarProceso()">🛠️ Come è stato creato?</button>
-  <button onclick="mostrarChat()">💬 Domanda libre</button>
-  <button onclick="iniciarVoz()">🎤 Parlare</button>
- </div>
-<!-- CONTENIDO DEL OBJETO (SIEMPRE VISIBLE) -->
-<div id="contenidoObjeto" style="margin-top:20px;">
-  <em>Seleziona un'opzione per visualizzare le informazioni.</em>
-</div>
 
-<!-- CHAT (OCULTO POR DEFECTO) -->
-<div id="chat" style="display:none; margin-top:20px;">
-  <input
-    type="text"
-    id="pregunta"
-    placeholder="Scrivi la tua domanda su questo articolo..."
-    style="width:100%; padding:10px;"
-  />
+  <div class="actions">
+    <button onclick="mostrarHistoria()">📜 Storia dell’oggetto</button>
+    <button onclick="mostrarSignificado()">🎨 Cosa rappresenta?</button>
+    <button onclick="mostrarProceso()">🛠️ Come è stato creato?</button>
+    <button onclick="mostrarChat()">💬 Domanda libera</button>
+    <button onclick="iniciarVoz()">🎤 Parlare</button>
+  </div>
+
+  <!-- CONTENIDO DEL OBJETO -->
+  <div id="contenidoObjeto" class="content">
+    <em>Seleziona un'opzione per visualizzare le informazioni.</em>
+  </div>
+
+  <!-- CHAT -->
+  <div id="chat" class="chat hidden">
+    <input
+      type="text"
+      id="pregunta"
+      placeholder="Scrivi la tua domanda su questo articolo..."
+      oninput="mostrarInvia()"
+    />
+
+    <button id="btnInvia" onclick="enviarPregunta()">
+      Invia domanda
+    </button>
+
+    <div id="respuestaChat" class="content">
+      <em>Risposta.</em>
+    </div>
+  </div>
+</div>
 
   <button onclick="enviarPregunta()" style="margin-top:10px;">
     Invia domanda
