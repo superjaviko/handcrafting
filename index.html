@@ -69,7 +69,6 @@
     <button onclick="iniciarVoz()">🎤 Parlare</button>
   </div>
 
-  <!-- CONTENIDO DEL OBJETO -->
   <div id="contenidoObjeto" class="content">
     <em>Seleziona un'opzione per visualizzare le informazioni.</em>
   </div>
@@ -90,15 +89,6 @@
     <div id="respuestaChat" class="content">
       <em>Risposta.</em>
     </div>
-  </div>
-</div>
-
-  <button onclick="enviarPregunta()" style="margin-top:10px;">
-    Invia domanda
-  </button>
-
-  <div id="respuestaChat" style="margin-top:10px; background:#eee; padding:10px;">
-    <em>Risposta.</em>
   </div>
 </div>
 
@@ -157,6 +147,10 @@ async function iniciarGrabacion() {
 function ocultarChat() {
   document.getElementById("chat").style.display = "none";
 }
+function mostrarChat() {
+  document.getElementById("chat").classList.remove("hidden");
+  document.getElementById("btnInvia").style.display = "block";
+}
 
 function mostrarHistoria() {
   ocultarChat();
@@ -172,11 +166,6 @@ function mostrarProceso() {
   ocultarChat();
   document.getElementById("contenidoObjeto").innerText = contenido.proceso;
 }
-
-function mostrarChat() {
-  document.getElementById("chat").classList.remove("hidden");
-  document.getElementById("btnInvia").style.display = "block";
-}
   
 function hablar(testo) {
   const speech = new SpeechSynthesisUtterance(testo);
@@ -188,8 +177,6 @@ function hablar(testo) {
   
 function iniciarVoz() {
   document.getElementById("chat").classList.remove("hidden");
-
-  // OCULTAR BOTÓN EN MODO VOZ
   document.getElementById("btnInvia").style.display = "none";
 
   const SpeechRecognition =
@@ -214,8 +201,6 @@ function iniciarVoz() {
   recognition.onresult = (event) => {
     const testo = event.results[0][0].transcript;
     document.getElementById("pregunta").value = testo;
-
-    // ENVÍO AUTOMÁTICO (SIN BOTÓN)
     enviarPregunta();
   };
 
@@ -227,10 +212,10 @@ function iniciarVoz() {
   
 function mostrarInvia() {
   const texto = document.getElementById("pregunta").value.trim();
-  if (texto.length > 0) {
-    document.getElementById("btnInvia").style.display = "block";
-  }
+  document.getElementById("btnInvia").style.display =
+    texto.length > 0 ? "block" : "none";
 }
+  
 async function enviarPregunta() {
   const pregunta = document.getElementById("pregunta").value;
   if (!pregunta) return;
