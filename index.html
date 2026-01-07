@@ -145,24 +145,28 @@ async function iniciarGrabacion() {
 }
 
 function ocultarChat() {
-  document.getElementById("chat").style.display = "none";
-}
-function mostrarChat() {
-  // Limpiar contenido del objeto
-  document.getElementById("contenidoObjeto").innerHTML = "";
-
-  // Mostrar chat
   const chat = document.getElementById("chat");
-  chat.classList.remove("hidden");
+  chat.classList.add("hidden");
+}
 
-  // Resetear input y respuesta
+function mostrarChat() {
+  const chat = document.getElementById("chat");
+  const contenidoObjeto = document.getElementById("contenidoObjeto");
+
+  // Ocultar cualquier contenido previo
+  contenidoObjeto.innerHTML = "";
+
+  // Resetear chat
   document.getElementById("pregunta").value = "";
-  document.getElementById("respuestaChat").innerHTML =
-    "<em>Risposta.</em>";
+  document.getElementById("respuestaChat").innerHTML = "<em>Risposta.</em>";
 
   // Mostrar botón Invia (modo texto)
-  document.getElementById("btnInvia").style.display = "block";
+  document.getElementById("btnInvia").classList.remove("hidden");
+
+  // MOSTRAR CHAT (CLAVE)
+  chat.classList.remove("hidden");
 }
+
 function mostrarHistoria() {
   ocultarChat();
   document.getElementById("contenidoObjeto").innerText = contenido.historia;
@@ -188,7 +192,8 @@ function hablar(testo) {
   
 function iniciarVoz() {
   document.getElementById("chat").classList.remove("hidden");
-  document.getElementById("btnInvia").style.display = "none";
+  document.getElementById("btnInvia").classList.add("hidden");
+
 
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
