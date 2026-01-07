@@ -147,7 +147,6 @@ async function iniciarGrabacion() {
 function ocultarChat() {
   document.getElementById("chat").style.display = "none";
 }
-  
 function mostrarChat() {
   // Limpiar contenido del objeto
   document.getElementById("contenidoObjeto").innerHTML = "";
@@ -164,7 +163,6 @@ function mostrarChat() {
   // Mostrar botón Invia (modo texto)
   document.getElementById("btnInvia").style.display = "block";
 }
-
 function mostrarHistoria() {
   ocultarChat();
   document.getElementById("contenidoObjeto").innerText = contenido.historia;
