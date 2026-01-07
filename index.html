@@ -147,8 +147,21 @@ async function iniciarGrabacion() {
 function ocultarChat() {
   document.getElementById("chat").style.display = "none";
 }
+  
 function mostrarChat() {
-  document.getElementById("chat").classList.remove("hidden");
+  // Limpiar contenido del objeto
+  document.getElementById("contenidoObjeto").innerHTML = "";
+
+  // Mostrar chat
+  const chat = document.getElementById("chat");
+  chat.classList.remove("hidden");
+
+  // Resetear input y respuesta
+  document.getElementById("pregunta").value = "";
+  document.getElementById("respuestaChat").innerHTML =
+    "<em>Risposta.</em>";
+
+  // Mostrar botón Invia (modo texto)
   document.getElementById("btnInvia").style.display = "block";
 }
 
