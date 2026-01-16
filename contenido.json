@@ -1,5 +1,5 @@
 {
-  "titulo": "HUMANMADE+",
+  "titoli": "HUMANMADE+",
   
   "bienvenida": "Benvenuti. Questo articolo ha una storia speciale. Seleziona un'opzione per saperne di più.",
 
@@ -9,16 +9,46 @@
 
   "historia": "Questo oggetto è stato realizzato a mano da un artigiano locale utilizzando tecniche tradizionali tramandate di generazione in generazione.",
 
-  "Origine geografica": "Italia - Calabria - Rende_Cosenza",
+  "origine": "Italia - Calabria - Rende_Cosenza",
 
-  "significado": "I simboli e i colori di questo oggetto rappresentano protezione, identità culturale e connessione con la natura.",
+  "fonte": "Incontro dell’artigianato con la tecnologia digitale _ AI",
 
-  "proceso": "Il processo di creazione ha richiesto diversi giorni e ha incluso la selezione di materiali naturali, la modellatura manuale e la finitura artigianale.",
+  "contesto": "Impresa artigiana con Bottega sita in Rende e l’incontro con l’evento Humanmade (UNICAL, Confartigianato, Dimeg)",
 
-  "artesano": "Javier Suárez. Questo artigiano appartiene a una comunità che mantiene vive le tradizioni culturali della sua regione.",
-
-  "materiales": "Legno di cedro, fibre naturali e pigmenti minerali",
-
-  "tiempo": "L'oggetto è stato costruito nel dicembre 2025."
+  "significato": "Incontro e sinergia tra tecnologia digitale e artigianato",
   
+  "significato": "Evoluzione e memoria. Costruisco e agisco nel presente, con lo sguardo rivolto al futuro, facendo tesoro del passato e delle origini. L’uno non esclude l’altro e l’uno non vale più dell’altro.",
+
+  "simboli": "Mano: simbolo scelto per rappresentare l’artigianato Gomitolo: simbolo scelto per rappresentare l’AI (Artificial Intelligence)",
+  
+  "proceso": "Il prodotto nasce dall’incontro e miscelazione della polvere di ceramica con l’acqua e un colorante universale (stesso processo per la lavorazione del gesso). Ciò permette di ottenere un impasto con consistenza simile a quella di uno yogurt. Per questo tipo di lavorazione, la tecnica utilizzata è quella per colaggio con l’ausilio di stampi in silicone, dove il composto viene lasciato indurire e successivamente rimosso. La forma ottenuta prima di essere rifinita o decorata viene riposta su piani di legno per la naturale asciugatura all’aria. Quando il pezzo è completamente asciutto si passa alla fase della rifinitura attraverso levigatura e dell'eventuale decoro, lucidatura e profumazione.",
+
+  "tecniche":  "Miscelazione della polvere; Miscelazione del colore; Colaggio; Rifinitura del pezzo (levigatura)",
+  
+  "tempo": "Per questo tipo di creazione 3/5 min. per la miscelazione e lavorazione del composto; 25/30 min. posa nello stampo prima dell’estrazione; Minimo 10 gg di asciugatura all’aria (in autunno e in inverno questa fase si allunga) Rifinitura del pezzo (20min a pz.)"
+    
+  "artigiano": "Santina Galliano Iannelli in arte Alice",
+
+  "breveBiografia": "Santina Galliano Iannelli, nata a Cetraro (CS) il 18 gennaio 1979, in arte Alice.\n\nSono cresciuta nel mio paese di nascita e ho intrapreso studi tecnici legati all’attività commerciale di famiglia. Nel 1997 ho conseguito il diploma di Ragioniere e Perito Commerciale, seguito dal diploma di abilitazione all’esercizio della professione di Consulente del Lavoro, dalla Laurea in Economia e dall’abilitazione come esperto contabile, professione che ho svolto con passione e dedizione fino al 2014.\n\nAll’inizio del 2015 qualcosa cambia profondamente. Sento che quella non è più la mia unica strada. Inizia quella che definisco una fase di risveglio. Sono mamma di due bambini e ho 36 anni. Le mie certezze crollano e inizio un percorso di ascolto profondo, crescita personale e trasformazione interiore.\n\nNel 2017 divento facilitatrice del metodo TUAV (Tutta Un’Altra Vita di Lucia Giovannini) e Mental Coach con certificazione internazionale presso la scuola di Robert Neff. Conseguito successivamente il titolo in Psicologia, collaboro come formatrice con una scuola di coaching di Milano e fondo una mia Academy di coaching in Calabria, accompagnando persone e professionisti nei loro percorsi di crescita personale e professionale.\n\nNel 2020, durante momenti di formazione e allenamento mentale, emerge un talento creativo fino ad allora inespresso, quello che nel coaching definiremmo un insight o un momento di profonda consapevolezza.\n\nNel 2021 nasce Calabrì, simbolo di crescita e portatore di luce, all’interno di un progetto più ampio. Tra il 2021 e il 2023 Calabrì viene nutrito e custodito come un figlio, fino a quando è pronto a esprimersi pienamente.\n\nA settembre 2023 Calabrì – La Bottega di Alice apre a Rende, diventando uno spazio fisico in cui condividere il mio mondo, il mio modo di comunicare e il legame profondo tra pensiero e azione, idea e creazione, crescita e luce. Un sogno immaginato che si è trasformato in realtà concreta."
+
+  "materiali": "Polvere di ceramica (atossica e inodore), Colorante universale, Polvere di gesso, Acqua Olii essenziali puri",
+
+  "origineMateriali": "I materiali impiegati in questo tipo di creazione sono lavorati da aziende terze. Si può comunque segnalare che la polvere (così come utilizzata) non viene direttamente estratta (come nel caso dell’argilla o della terra cruda), ma prodotta attraverso macinazione di materie prime estratte (es.argille, feldspati, caolino) per arrivare alla polvere fine",
+  
+  "caratteristiche particolari dei materiali": {
+    "descrizione": "Tra le caratteristiche dei materiali utilizzati (vale per polvere di ceramica e gesso) possiamo certamente segnalare le 5 fasi di trasformazione che accompagnano il manufatto, oltre il fatto che questo tipo di lavorazioni sono estremamente sensibili alle temperature e all’umidità presenti nell’aria (questo è un elemento molto importante in fase di asciugatura)",
+    "fasi": [
+      "Miscelazione: la polvere viene trasformata in una miscela a consistenza densa.",
+      "Colatura: il composto viene versato nello stampo e risulta freddo.",
+      "Posa: dopo circa 15 minuti il materiale inizia a indurirsi e a riscaldarsi.",
+      "Estrazione dallo stampo: il pezzo estratto è molto caldo al tatto.",
+      "Asciugatura: il pezzo disperde gradualmente il calore fino a diventare solido."
+    ],
+   "note": "Il processo è fortemente influenzato dalle condizioni ambientali, in particolare temperatura e umidità."
+  }
 }
+
+"funzione":"Nell’insieme pezzo d’arredo.Nello specifico il gomitolo funge da profumatore d’ambiente, poroso e rigenerabile.Scopo attuale (decorativo, rituale, culturale, educativo, ecc…)Realizzato per Humanmade lo scopo attuale della creazione è certamente di dono ememoria, culturale, educativo, divulgativo, di speranza, inteso come: coltiva i tuoi sogni ecrea connessioni significative",
+"importanza": "Trasmettere a tutti i partecipanti di Humanmade l’alchimia di una creazione artigianale (come un oggetto creato con materiali “poveri” può essere “riconosciuto e classificato come pezzo unico e oggetto di design per texture, colori e forma)",
+"curiosita": "Questa creazione è nata da un pezzo che è piaciuto ad Antonio (lui si occupa ditecnologia) ed uno che è piaciuto ad Alice (lei si occupa di artigianato). È stata pensata ecreata come dono simbolo di Humanmade edizione evento gennaio 2026",
+"raccomandazioni": "Non immergere in acqua, oggetto non lavabile \n Il gomitolo olfattivo, gessetto profumato rigenerabile mediante spruzzo di nuovo profumo o mediante applicazione di olio essenziale direttamente sull’oggetto\n Non esporre a fonti dirette di calore per preservarne la fragranza e non esporre a lucesolare diretta per preservarne il colore\n Il manufatto risponde ed è sensibile alle temperature (sembra un oggetto inanimato, ma è un pezzo vivo)."
