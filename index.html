@@ -98,78 +98,45 @@
 
 <script>
 let contenido = {};
+let contenidoCargado = false;
 
+/* =============================
+   CARGA Y VALIDACIÓN DEL JSON
+============================= */
 fetch("contenido.json")
-  .then(r => r.json())
+  .then(res => {
+    if (!res.ok) throw new Error("No se pudo cargar contenido.json");
+    return res.json();
+  })
   .then(data => {
     contenido = data;
+    contenidoCargado = true;
+    console.log("✅ Contenido cargado correctamente");
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Errore nel contenuto dell’oggetto.");
   });
 
-let mediaRecorder;
-let audioChunks = [];
-
-async function iniciarGrabacion() {
-  audioChunks = [];
-
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    alert("Il tuo browser non supporta la registrazione audio.");
-    return;
-  }
-
-  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-
-  mediaRecorder = new MediaRecorder(stream);
-  mediaRecorder.start();
-
-  document.getElementById("contenidoObjeto").innerText =
-    "🎤 Registrazione in corso… parli ora.";
-
-  mediaRecorder.ondataavailable = (event) => {
-    audioChunks.push(event.data);
-  };
-
-  mediaRecorder.onstop = () => {
-  console.log("Chunks:", audioChunks.length);
-  console.log("Size:", audioChunks.reduce((s, b) => s + b.size, 0));
-
-  if (audioChunks.length === 0) {
-    document.getElementById("contenidoObjeto").innerText =
-      "❌ Nessun audio registrato dal browser.";
-    return;
-  }
-
-  const audioBlob = new Blob(audioChunks);
-  enviarAudio(audioBlob);
-};
-
-  setTimeout(() => {
-    mediaRecorder.stop();
-  }, 5000);
-}
-
+/* =============================
+   CHAT VISUAL
+============================= */
 function ocultarChat() {
-  const chat = document.getElementById("chat");
-  chat.classList.add("hidden");
+  document.getElementById("chat").classList.add("hidden");
 }
 
 function mostrarChat() {
-  const chat = document.getElementById("chat");
-  const contenidoObjeto = document.getElementById("contenidoObjeto");
-
-  // Ocultar cualquier contenido previo
-  contenidoObjeto.innerHTML = "";
-
-  // Resetear chat
+  ocultarChat();
+  document.getElementById("contenidoObjeto").innerHTML = "";
+  document.getElementById("chat").classList.remove("hidden");
+  document.getElementById("btnInvia").classList.remove("hidden");
   document.getElementById("pregunta").value = "";
   document.getElementById("respuestaChat").innerHTML = "<em>Risposta.</em>";
-
-  // Mostrar botón Invia (modo texto)
-  document.getElementById("btnInvia").classList.remove("hidden");
-
-  // MOSTRAR CHAT (CLAVE)
-  chat.classList.remove("hidden");
 }
 
+/* =============================
+   CONTENIDO FIJO
+============================= */
 function mostrarHistoria() {
   ocultarChat();
   document.getElementById("contenidoObjeto").innerText = contenido.historia;
@@ -177,149 +144,132 @@ function mostrarHistoria() {
 
 function mostrarSignificado() {
   ocultarChat();
-  document.getElementById("contenidoObjeto").innerText = contenido.significatoSimbolico;
+  document.getElementById("contenidoObjeto").innerText =
+    contenido.significatoSimbolico;
 }
 
 function mostrarProceso() {
   ocultarChat();
-  document.getElementById("contenidoObjeto").innerText = contenido.processo;
+  document.getElementById("contenidoObjeto").innerText =
+    contenido.processo;
 }
-  
+
+/* =============================
+   VOZ
+============================= */
 function hablar(testo) {
   const speech = new SpeechSynthesisUtterance(testo);
   speech.lang = "it-IT";
-  speech.rate = 0.95;
-  speech.pitch = 1;
   window.speechSynthesis.speak(speech);
 }
-  
-function iniciarVoz() {
-  document.getElementById("chat").classList.remove("hidden");
-  document.getElementById("btnInvia").classList.add("hidden");
 
+function iniciarVoz() {
+  mostrarChat();
+  document.getElementById("btnInvia").classList.add("hidden");
 
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
 
   if (!SpeechRecognition) {
     document.getElementById("contenidoObjeto").innerText =
-      "Il riconoscimento vocale non è disponibile su questo dispositivo.";
+      "Il riconoscimento vocale non è disponibile.";
     return;
   }
 
   const recognition = new SpeechRecognition();
   recognition.lang = "it-IT";
-  recognition.continuous = false;
-  recognition.interimResults = false;
-
   recognition.start();
 
   document.getElementById("contenidoObjeto").innerText =
-    "🎤 In ascolto… parli ora.";
+    "🎤 In ascolto…";
 
   recognition.onresult = (event) => {
-    const testo = event.results[0][0].transcript;
-    document.getElementById("pregunta").value = testo;
+    document.getElementById("pregunta").value =
+      event.results[0][0].transcript;
     enviarPregunta();
   };
 
   recognition.onerror = () => {
     document.getElementById("contenidoObjeto").innerText =
-      "❌ Nessuna voce rilevata. Riprovi.";
+      "❌ Voce non riconosciuta.";
   };
 }
-  
-function mostrarInvia() {
-  const texto = document.getElementById("pregunta").value.trim();
-  document.getElementById("btnInvia").style.display =
-    texto.length > 0 ? "block" : "none";
-}
-  
+
+/* =============================
+   ENVÍO A IA (CORREGIDO)
+============================= */
 async function enviarPregunta() {
-  const pregunta = document.getElementById("pregunta").value;
+  if (!contenidoCargado) {
+    alert("Il contenuto non è ancora pronto. Riprova.");
+    return;
+  }
+
+  const pregunta = document.getElementById("pregunta").value.trim();
   if (!pregunta) return;
 
-  document.getElementById("respuestaChat").innerText = "Pensando...";
+  document.getElementById("respuestaChat").innerText = "Pensando…";
 
-  const contexto = `
+  const caratteristicheMaterialiTesto =
+    contenido.caratteristicheMateriali
+      ? `${contenido.caratteristicheMateriali.descrizione}
+${(contenido.caratteristicheMateriali.fasi || []).join("\n")}
+${contenido.caratteristicheMateriali.note || ""}`
+      : "";
+
+  const contesto = `
 Nome oggetto: ${contenido.nomeOggetto}
 Tipo oggetto: ${contenido.tipoOggetto}
 Storia: ${contenido.historia}
 Origine: ${contenido.origine}
-Fonte di ispirazione: ${contenido.fonte}
-Contesto storico: ${contenido.contesto}
+Fonte: ${contenido.fonte}
+Contesto: ${contenido.contesto}
 
-Significato: ${contenido.significato}
 Significato simbolico: ${contenido.significatoSimbolico}
 Significato spirituale: ${contenido.significatoSpirituale}
 Simboli: ${contenido.simboli}
 
-Processo di creazione: ${contenido.processo}
-Tecniche utilizzate: ${contenido.tecniche}
-Tempo di realizzazione: ${contenido.tempo}
+Processo: ${contenido.processo}
+Tecniche: ${contenido.tecniche}
+Tempo: ${contenido.tempo}
 
 Materiali: ${contenido.materiali}
-Origine dei materiali: ${contenido.origineMateriali}
+Origine materiali: ${contenido.origineMateriali}
 
+Caratteristiche materiali:
 ${caratteristicheMaterialiTesto}
 
 Artigiano: ${contenido.artigiano}
 Biografia:
 ${contenido.breveBiografia}
 
-Funzione dell’oggetto: ${contenido.funzione}
-Importanza culturale: ${contenido.importanza}
+Funzione: ${contenido.funzione}
+Importanza: ${contenido.importanza}
 Curiosità: ${contenido.curiosita}
 Raccomandazioni: ${contenido.raccomandazioni}
 `;
 
-  const response = await fetch("/api/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      pregunta,
-      contenido: contexto
-    })
-  });
+  try {
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ pregunta, contenido: contesto })
+    });
 
-  const data = await response.json();
+    const data = await response.json();
 
-  if (!data.respuesta) {
+    if (!data.respuesta) throw new Error("Risposta vuota");
+
+    document.getElementById("respuestaChat").innerText = data.respuesta;
+    hablar(data.respuesta);
+
+  } catch (err) {
+    console.error(err);
     document.getElementById("respuestaChat").innerText =
-      "Errore nella risposta dell’assistente.";
-    return;
+      "❌ Errore nella risposta dell’assistente.";
   }
-
-  document.getElementById("respuestaChat").innerText = data.respuesta;
-  hablar(data.respuesta);
 }
-
-async function enviarAudio(audioBlob) {
-  document.getElementById("contenidoObjeto").innerText =
-    "⏳ Elaborazione della domanda…";
-
-  const formData = new FormData();
-  formData.append("file", audioBlob, "audio");
-
-  const response = await fetch("/api/transcribe", {
-    method: "POST",
-    body: formData
-  });
-
-  const data = await response.json();
-
-  if (!data.texto) {
-    document.getElementById("contenidoObjeto").innerText =
-      "❌ Non è stato possibile comprendere la voce.";
-    return;
-  }
-
-  document.getElementById("pregunta").value = data.texto;
-  mostrarChat();
-  enviarPregunta();
-}
-
 </script>
+
 
 
 </body>
