@@ -241,39 +241,54 @@ async function enviarPregunta() {
 
   document.getElementById("respuestaChat").innerText = "Pensando...";
 
+  const contexto = `
+Nome oggetto: ${contenido.nomeOggetto}
+Tipo oggetto: ${contenido.tipoOggetto}
+Origine: ${contenido.origine}
+Fonte di ispirazione: ${contenido.fonte}
+Contesto storico: ${contenido.contesto}
+
+Significato: ${contenido.significato}
+Significato simbolico: ${contenido.significatoSimbolico}
+Significato spirituale: ${contenido.significatoSpirituale}
+Simboli: ${contenido.simboli}
+
+Processo di creazione: ${contenido.processo}
+Tecniche utilizzate: ${contenido.tecniche}
+Tempo di realizzazione: ${contenido.tempo}
+
+Materiali: ${contenido.materiali}
+Origine dei materiali: ${contenido.origineMateriali}
+
+${caratteristicheMaterialiTesto}
+
+Artigiano: ${contenido.artigiano}
+Biografia:
+${contenido.breveBiografia}
+
+Funzione dell’oggetto: ${contenido.funzione}
+Importanza culturale: ${contenido.importanza}
+Curiosità: ${contenido.curiosita}
+Raccomandazioni: ${contenido.raccomandazioni}
+`;
+
   const response = await fetch("/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       pregunta,
-      contenido: `
-Historia: ${contenido.historia}
-Significado: ${contenido.significado}
-Proceso: ${contenido.proceso}
-Materiales: ${contenido.materiali}
-OrigenMateriales: ${contenido.origineMateriali}
-Artesano: ${contenido.artigiano}
-Objeto:${contenido.nomeOggetto}
-TObjeto: ${contenido.tipoOggetto}
-Origen: ${contenido.origine}
-Fuente: ${contenido.fonte}
-Contexto: ${contenido.contesto}
-SignificadoSimbolico: ${contenido.significatoSimbolico}
-SignificadoEspiritual: ${contenido.significadoSpirituale}
-Simbolo: ${contenido.simboli}
-Tecnica: ${contenido.techniche}
-Tiempo: ${contenido.tempo}
-Biografia: ${contenido.breveBiografia}
-CaracteristicasMateriales: ${contenido.caratteristicheMateriali}
-Funcion: ${contenido.funzione}
-Importancia: ${contenido.importanza}
-Curiosidad: ${contenido.curiosita}
-Recomendaciones: ${contenido.raccomendazioni}
-`
+      contenido: contexto
     })
   });
 
   const data = await response.json();
+
+  if (!data.respuesta) {
+    document.getElementById("respuestaChat").innerText =
+      "Errore nella risposta dell’assistente.";
+    return;
+  }
+
   document.getElementById("respuestaChat").innerText = data.respuesta;
   hablar(data.respuesta);
 }
