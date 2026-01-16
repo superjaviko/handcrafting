@@ -3,9 +3,9 @@
   
   "bienvenida": "Benvenuti. Questo articolo ha una storia speciale. Seleziona un'opzione per saperne di più.",
 
-  "nome dell'oggetto": "Umanità Intrecciate",
+  "nomeOggetto": "Umanità Intrecciate",
 
-  "tipologia dell'oggetto":"Mano in polvere di ceramica sulla quale poggia un gomitolo in gesso (gessetto olfattivo alla fragranza di Bergamotto)",
+  "tipoOggetto":"Mano in polvere di ceramica sulla quale poggia un gomitolo in gesso (gessetto olfattivo alla fragranza di Bergamotto)",
 
   "historia": "Questo oggetto è stato realizzato a mano da un artigiano locale utilizzando tecniche tradizionali tramandate di generazione in generazione.",
 
@@ -15,9 +15,9 @@
 
   "contesto": "Impresa artigiana con Bottega sita in Rende e l’incontro con l’evento Humanmade (UNICAL, Confartigianato, Dimeg)",
 
-  "significato": "Incontro e sinergia tra tecnologia digitale e artigianato",
+  "significatoSimbolico": "Incontro e sinergia tra tecnologia digitale e artigianato",
   
-  "significato": "Evoluzione e memoria. Costruisco e agisco nel presente, con lo sguardo rivolto al futuro, facendo tesoro del passato e delle origini. L’uno non esclude l’altro e l’uno non vale più dell’altro.",
+  "significatoSpirituale": "Evoluzione e memoria. Costruisco e agisco nel presente, con lo sguardo rivolto al futuro, facendo tesoro del passato e delle origini. L’uno non esclude l’altro e l’uno non vale più dell’altro.",
 
   "simboli": "Mano: simbolo scelto per rappresentare l’artigianato Gomitolo: simbolo scelto per rappresentare l’AI (Artificial Intelligence)",
   
@@ -35,7 +35,7 @@
 
   "origineMateriali": "I materiali impiegati in questo tipo di creazione sono lavorati da aziende terze. Si può comunque segnalare che la polvere (così come utilizzata) non viene direttamente estratta (come nel caso dell’argilla o della terra cruda), ma prodotta attraverso macinazione di materie prime estratte (es.argille, feldspati, caolino) per arrivare alla polvere fine",
   
-  "caratteristiche particolari dei materiali": {
+  "caratteristicheMateriali": {
     "descrizione": "Tra le caratteristiche dei materiali utilizzati (vale per polvere di ceramica e gesso) possiamo certamente segnalare le 5 fasi di trasformazione che accompagnano il manufatto, oltre il fatto che questo tipo di lavorazioni sono estremamente sensibili alle temperature e all’umidità presenti nell’aria (questo è un elemento molto importante in fase di asciugatura)",
     "fasi": [
       "Miscelazione: la polvere viene trasformata in una miscela a consistenza densa.",
@@ -51,4 +51,4 @@
 "funzione":"Nell’insieme pezzo d’arredo.Nello specifico il gomitolo funge da profumatore d’ambiente, poroso e rigenerabile.Scopo attuale (decorativo, rituale, culturale, educativo, ecc…)Realizzato per Humanmade lo scopo attuale della creazione è certamente di dono ememoria, culturale, educativo, divulgativo, di speranza, inteso come: coltiva i tuoi sogni ecrea connessioni significative",
 "importanza": "Trasmettere a tutti i partecipanti di Humanmade l’alchimia di una creazione artigianale (come un oggetto creato con materiali “poveri” può essere “riconosciuto e classificato come pezzo unico e oggetto di design per texture, colori e forma)",
 "curiosita": "Questa creazione è nata da un pezzo che è piaciuto ad Antonio (lui si occupa ditecnologia) ed uno che è piaciuto ad Alice (lei si occupa di artigianato). È stata pensata ecreata come dono simbolo di Humanmade edizione evento gennaio 2026",
-"raccomandazioni": "Non immergere in acqua, oggetto non lavabile \n Il gomitolo olfattivo, gessetto profumato rigenerabile mediante spruzzo di nuovo profumo o mediante applicazione di olio essenziale direttamente sull’oggetto\n Non esporre a fonti dirette di calore per preservarne la fragranza e non esporre a lucesolare diretta per preservarne il colore\n Il manufatto risponde ed è sensibile alle temperature (sembra un oggetto inanimato, ma è un pezzo vivo)."
+"raccomendazioni": "Non immergere in acqua, oggetto non lavabile \n Il gomitolo olfattivo, gessetto profumato rigenerabile mediante spruzzo di nuovo profumo o mediante applicazione di olio essenziale direttamente sull’oggetto\n Non esporre a fonti dirette di calore per preservarne la fragranza e non esporre a lucesolare diretta per preservarne il colore\n Il manufatto risponde ed è sensibile alle temperature (sembra un oggetto inanimato, ma è un pezzo vivo)."
