@@ -189,14 +189,20 @@ function mostrarHistoria() {
 
 function mostrarSignificado() {
   ocultarChat();
-  document.getElementById("contenidoObjeto").innerText =
-    contenido.significatoSimbolico;
+  const box = document.getElementById("contenidoObjeto");
+  box.innerText = contenido.significatoSimbolico;
+  box.classList.remove("fade-in");
+  void box.offsetWidth; // reset animation
+  box.classList.add("fade-in");
 }
 
 function mostrarProceso() {
   ocultarChat();
-  document.getElementById("contenidoObjeto").innerText =
-    contenido.processo;
+  dconst box = document.getElementById("contenidoObjeto");
+  box.innerText = contenido.processo;
+  box.classList.remove("fade-in");
+  void box.offsetWidth; // reset animation
+  box.classList.add("fade-in");
 }
 
 /* =============================
