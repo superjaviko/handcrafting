@@ -198,7 +198,7 @@ function mostrarSignificado() {
 
 function mostrarProceso() {
   ocultarChat();
-  dconst box = document.getElementById("contenidoObjeto");
+  const box = document.getElementById("contenidoObjeto");
   box.innerText = contenido.processo;
   box.classList.remove("fade-in");
   void box.offsetWidth; // reset animation
