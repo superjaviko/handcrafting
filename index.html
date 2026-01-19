@@ -1,46 +1,57 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <div class="header">
-  <img src="logo.png" alt="Logo Calabrì" class="logo">
-  <h1>Oggetto fatto a mano</h1>
-  </div>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HUMANMADE+</title>
+
   <style>
     * {
-  box-sizing: border-box;
+      box-sizing: border-box;
     }
-   .header {
-    text-align: center;
-    margin-bottom: 20px;
-    }
-   .logo {
-    max-width: 140px;
-    width: 40%;
-    height: auto;
-    margin-bottom: 10px;
-    }
+
     body {
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
       margin: 0;
       padding: 20px;
     }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      max-width: 140px;
+      width: 40%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
     .container {
       max-width: 600px;
       margin: auto;
       background: white;
       padding: 20px;
-      border-radius: 8px;
+      border-radius: 12px;
     }
+
     h1 {
       text-align: center;
+      margin-top: 0;
     }
-    button {
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .action-btn {
       width: 100%;
       padding: 15px;
-      margin: 8px 0;
       font-size: 16px;
       cursor: pointer;
       border-radius: 10px;
@@ -49,33 +60,42 @@
       color: #fff;
       transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s;
     }
-    button:active {
-    transform: scale(0.97);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2) inset;
+
+    .action-btn:hover {
+      background: linear-gradient(135deg, #555, #333);
     }
-    button:hover {
-    background: linear-gradient(135deg, #555, #333);
+
+    .action-btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2) inset;
     }
-    
-    #respuesta {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #eee;
-      border-radius: 6px;
+
+    .action-btn.active {
+      background: linear-gradient(135deg, #222, #000);
+      font-weight: bold;
     }
+
+    .btn-chat {
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+    }
+
+    .btn-voice {
+      background: linear-gradient(135deg, #8e44ad, #6c3483);
+    }
+
     #contenidoObjeto,
     #respuestaChat {
-    margin-top: 20px;
-    padding: 16px;
-    background: #f8f8f8;
-    border-radius: 12px;
-    font-size: 15px;
-    line-height: 1.5;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      margin-top: 20px;
+      padding: 16px;
+      background: #f8f8f8;
+      border-radius: 12px;
+      font-size: 15px;
+      line-height: 1.5;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 
     .fade-in {
-     animation: fadeIn 0.3s ease-in-out;
+      animation: fadeIn 0.3s ease-in-out;
     }
 
     @keyframes fadeIn {
@@ -87,11 +107,12 @@
         opacity: 1;
         transform: translateY(0);
       }
-     }
+    }
 
     .hidden {
       display: none;
     }
+
     .chat input {
       width: 100%;
       padding: 12px;
@@ -99,148 +120,110 @@
       margin-bottom: 10px;
     }
 
-     #btnInvia {
+    #btnInvia {
       width: 100%;
       padding: 12px;
       font-size: 1rem;
-    }
-    .btn-voice {
-     background: linear-gradient(135deg, #8e44ad, #6c3483);
-     }
-
-    .btn-chat {
-     background: linear-gradient(135deg, #2c3e50, #34495e);
-    }
-    .actions {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .action-btn {
-      width: 100%;
-      padding: 14px;
-      font-size: 1rem;
+      border-radius: 8px;
       border: none;
-      border-radius: 6px;
-      background: #ffffff;
+      background: #222;
+      color: #fff;
       cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s;
     }
-
-    .action-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    }
-
-    .action-btn:active {
-     transform: scale(0.97);
-    }
-
-   .action-btn.active {
-     background: #eaeaea;
-     font-weight: 600;
-   }
   </style>
 </head>
+
 <body>
 
-<div class="container">
-  <h1>HUMANMADE+</h1>
-
-  <p>
-    Benvenuti. Questo articolo ha una storia speciale.
-    Seleziona un'opzione per saperne di più
-  </p>
-
-  <div class="actions">
-  <button class="action-btn" onclick="activarBoton(this); mostrarHistoria()">📜 Storia dell’oggetto</button>
-  <button class="action-btn" onclick="activarBoton(this); mostrarSignificado()">🎨 Cosa significa?</button>
-  <button class="action-btn" onclick="activarBoton(this); mostrarProceso()">🛠️ Come è stato creato?</button>
-
-  <button class="action-btn btn-chat" onclick="activarBoton(this); mostrarChat()">💬 Chiedi all'IA</button>
-  <button class="action-btn btn-voice" onclick="activarBoton(this); iniciarVoz()">🎤 Parlare</button>
+  <div class="header">
+    <img src="logo.png" alt="Logo Calabrì" class="logo">
+    <h1>Oggetto fatto a mano</h1>
   </div>
 
+  <div class="container">
+    <h1>HUMANMADE+</h1>
 
-  <div id="contenidoObjeto" class="content">
-    <em>Seleziona un'opzione per visualizzare le informazioni.</em>
-  </div>
+    <p>
+      Benvenuti. Questo articolo ha una storia speciale.<br>
+      Seleziona un'opzione per saperne di più.
+    </p>
 
-  <!-- CHAT -->
-  <div id="chat" class="chat hidden">
-    <input
-      type="text"
-      id="pregunta"
-      placeholder="Scrivi la tua domanda su questo articolo..."
-      oninput="mostrarInvia()"
-    />
+    <div class="actions">
+      <button class="action-btn" onclick="mostrarHistoria(this)">📜 Storia dell’oggetto</button>
+      <button class="action-btn" onclick="mostrarSignificado(this)">🎨 Cosa significa?</button>
+      <button class="action-btn" onclick="mostrarProceso(this)">🛠️ Come è stato creato?</button>
+      <button class="action-btn btn-chat" onclick="mostrarChat(this)">💬 Chiedi all'IA</button>
+      <button class="action-btn btn-voice" onclick="iniciarVoz(this)">🎤 Parlare</button>
+    </div>
 
-    <button id="btnInvia" onclick="enviarPregunta()">
-      Invia domanda
-    </button>
+    <div id="contenidoObjeto">
+      <em>Seleziona un'opzione per visualizzare le informazioni.</em>
+    </div>
 
-    <div id="respuestaChat" class="content">
-      <em>Risposta.</em>
+    <!-- CHAT -->
+    <div id="chat" class="chat hidden">
+      <input
+        type="text"
+        id="pregunta"
+        placeholder="Scrivi la tua domanda su questo articolo..."
+      />
+
+      <button id="btnInvia" onclick="enviarPregunta()">Invia domanda</button>
+
+      <div id="respuestaChat">
+        <em>Risposta.</em>
+      </div>
     </div>
   </div>
-</div>
-
 
 <script>
 let contenido = {};
 let contenidoCargado = false;
 
 /* =============================
-   CARGA Y VALIDACIÓN DEL JSON
+   CARGA JSON
 ============================= */
 fetch("contenido.json")
-  .then(res => {
-    if (!res.ok) throw new Error("No se pudo cargar contenido.json");
-    return res.json();
-  })
+  .then(res => res.json())
   .then(data => {
     contenido = data;
     contenidoCargado = true;
-    console.log("✅ Contenido cargado correctamente");
   })
-  .catch(err => {
-    console.error(err);
-    alert("Errore nel contenuto dell’oggetto.");
+  .catch(() => {
+    alert("Errore nel caricamento dei dati.");
   });
 
 /* =============================
-   CHAT VISUAL
+   UTILIDADES
 ============================= */
-function ocultarChat() {
-  document.getElementById("chat").classList.add("hidden");
+function activarBoton(btn) {
+  document.querySelectorAll(".action-btn").forEach(b =>
+    b.classList.remove("active")
+  );
+  if (btn) btn.classList.add("active");
 }
-
-function mostrarChat() {
-  ocultarChat();
-  document.getElementById("contenidoObjeto").innerHTML = "";
-  document.getElementById("chat").classList.remove("hidden");
-  document.getElementById("btnInvia").classList.remove("hidden");
-  document.getElementById("pregunta").value = "";
-  document.getElementById("respuestaChat").innerHTML = "<em>Risposta.</em>";
-}
-
-/* =============================
-   CONTENIDO FIJO
-============================= */
 
 function mostrarContenido(texto) {
   const box = document.getElementById("contenidoObjeto");
 
-  box.innerText = texto;
+  if (!texto) {
+    box.innerHTML = "<em>Contenuto non disponibile.</em>";
+    return;
+  }
 
-  // Reinicia animación
+  box.innerText = texto;
   box.classList.remove("fade-in");
   void box.offsetWidth;
   box.classList.add("fade-in");
 }
-  
-  
+
+function ocultarChat() {
+  document.getElementById("chat").classList.add("hidden");
+}
+
+/* =============================
+   BOTONES
+============================= */
 function mostrarHistoria(btn) {
   activarBoton(btn);
   ocultarChat();
@@ -259,11 +242,10 @@ function mostrarProceso(btn) {
   mostrarContenido(contenido.processo);
 }
 
-function activarBoton(btn) {
-  document.querySelectorAll(".action-btn").forEach(b =>
-    b.classList.remove("active")
-  );
-  btn.classList.add("active");
+function mostrarChat(btn) {
+  activarBoton(btn);
+  document.getElementById("contenidoObjeto").innerHTML = "";
+  document.getElementById("chat").classList.remove("hidden");
 }
 
 /* =============================
@@ -275,16 +257,14 @@ function hablar(testo) {
   window.speechSynthesis.speak(speech);
 }
 
-function iniciarVoz() {
-  mostrarChat();
-  document.getElementById("btnInvia").classList.add("hidden");
+function iniciarVoz(btn) {
+  mostrarChat(btn);
 
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
 
   if (!SpeechRecognition) {
-    document.getElementById("contenidoObjeto").innerText =
-      "Il riconoscimento vocale non è disponibile.";
+    mostrarContenido("Riconoscimento vocale non disponibile.");
     return;
   }
 
@@ -292,97 +272,39 @@ function iniciarVoz() {
   recognition.lang = "it-IT";
   recognition.start();
 
-  document.getElementById("contenidoObjeto").innerText =
-    "🎤 In ascolto…";
+  mostrarContenido("🎤 In ascolto…");
 
   recognition.onresult = (event) => {
     document.getElementById("pregunta").value =
       event.results[0][0].transcript;
     enviarPregunta();
   };
-
-  recognition.onerror = () => {
-    document.getElementById("contenidoObjeto").innerText =
-      "❌ Voce non riconosciuta.";
-  };
 }
 
 /* =============================
-   ENVÍO A IA (CORREGIDO)
+   IA
 ============================= */
 async function enviarPregunta() {
-  if (!contenidoCargado) {
-    alert("Il contenuto non è ancora pronto. Riprova.");
-    return;
-  }
+  if (!contenidoCargado) return;
 
   const pregunta = document.getElementById("pregunta").value.trim();
   if (!pregunta) return;
 
   document.getElementById("respuestaChat").innerText = "Pensando…";
 
-  const caratteristicheMaterialiTesto =
-    contenido.caratteristicheMateriali
-      ? `${contenido.caratteristicheMateriali.descrizione}
-${(contenido.caratteristicheMateriali.fasi || []).join("\n")}
-${contenido.caratteristicheMateriali.note || ""}`
-      : "";
+  const response = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ pregunta, contenido })
+  });
 
-  const contesto = `
-Nome oggetto: ${contenido.nomeOggetto}
-Tipo oggetto: ${contenido.tipoOggetto}
-Storia: ${contenido.historia}
-Origine: ${contenido.origine}
-Fonte: ${contenido.fonte}
-Contesto: ${contenido.contesto}
+  const data = await response.json();
+  document.getElementById("respuestaChat").innerText =
+    data.respuesta || "Errore nella risposta.";
 
-Significato simbolico: ${contenido.significatoSimbolico}
-Significato spirituale: ${contenido.significatoSpirituale}
-Simboli: ${contenido.simboli}
-
-Processo: ${contenido.processo}
-Tecniche: ${contenido.tecniche}
-Tempo: ${contenido.tempo}
-
-Materiali: ${contenido.materiali}
-Origine materiali: ${contenido.origineMateriali}
-
-Caratteristiche materiali:
-${caratteristicheMaterialiTesto}
-
-Artigiano: ${contenido.artigiano}
-Biografia:
-${contenido.breveBiografia}
-
-Funzione: ${contenido.funzione}
-Importanza: ${contenido.importanza}
-Curiosità: ${contenido.curiosita}
-Raccomandazioni: ${contenido.raccomandazioni}
-`;
-
-  try {
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ pregunta, contenido: contesto })
-    });
-
-    const data = await response.json();
-
-    if (!data.respuesta) throw new Error("Risposta vuota");
-
-    document.getElementById("respuestaChat").innerText = data.respuesta;
-    hablar(data.respuesta);
-
-  } catch (err) {
-    console.error(err);
-    document.getElementById("respuestaChat").innerText =
-      "❌ Errore nella risposta dell’assistente.";
-  }
+  hablar(data.respuesta);
 }
 </script>
-
-
 
 </body>
 </html>
