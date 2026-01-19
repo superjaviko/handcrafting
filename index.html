@@ -285,26 +285,75 @@ function iniciarVoz(btn) {
    IA
 ============================= */
 async function enviarPregunta() {
-  if (!contenidoCargado) return;
+  if (!contenidoCargado) {
+    alert("Il contenuto non è ancora pronto. Riprova.");
+    return;
+  }
 
   const pregunta = document.getElementById("pregunta").value.trim();
   if (!pregunta) return;
 
   document.getElementById("respuestaChat").innerText = "Pensando…";
 
-  const response = await fetch("/api/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ pregunta, contenido })
-  });
+  const caratteristicheMaterialiTesto =
+    contenido.caratteristicheMateriali
+      ? `${contenido.caratteristicheMateriali.descrizione}
+${(contenido.caratteristicheMateriali.fasi || []).join("\n")}
+${contenido.caratteristicheMateriali.note || ""}`
+      : "";
 
-  const data = await response.json();
-  document.getElementById("respuestaChat").innerText =
-    data.respuesta || "Errore nella risposta.";
+  const contesto = `
+Nome oggetto: ${contenido.nomeOggetto}
+Tipo oggetto: ${contenido.tipoOggetto}
+Storia: ${contenido.historia}
+Origine: ${contenido.origine}
+Fonte: ${contenido.fonte}
+Contesto: ${contenido.contesto}
 
-  hablar(data.respuesta);
+Significato simbolico: ${contenido.significatoSimbolico}
+Significato spirituale: ${contenido.significatoSpirituale}
+Simboli: ${contenido.simboli}
+
+Processo: ${contenido.processo}
+Tecniche: ${contenido.tecniche}
+Tempo: ${contenido.tempo}
+
+Materiali: ${contenido.materiali}
+Origine materiali: ${contenido.origineMateriali}
+
+Caratteristiche materiali:
+${caratteristicheMaterialiTesto}
+
+Artigiano: ${contenido.artigiano}
+Biografia:
+${contenido.breveBiografia}
+
+Funzione: ${contenido.funzione}
+Importanza: ${contenido.importanza}
+Curiosità: ${contenido.curiosita}
+Raccomandazioni: ${contenido.raccomandazioni}
+`;
+
+  try {
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ pregunta, contenido: contesto })
+    });
+
+    const data = await response.json();
+
+    if (!data.respuesta) throw new Error("Risposta vuota");
+
+    document.getElementById("respuestaChat").innerText = data.respuesta;
+    hablar(data.respuesta);
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById("respuestaChat").innerText =
+      "❌ Errore nella risposta dell’assistente.";
+  }
 }
 </script>
-
 </body>
 </html>
