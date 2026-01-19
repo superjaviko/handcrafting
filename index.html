@@ -56,12 +56,24 @@
     button:hover {
     background: linear-gradient(135deg, #555, #333);
     }
+    
     #respuesta {
       margin-top: 20px;
       padding: 15px;
       background-color: #eee;
       border-radius: 6px;
     }
+    #contenidoObjeto,
+    #respuestaChat {
+    margin-top: 20px;
+    padding: 16px;
+    background: #f8f8f8;
+    border-radius: 12px;
+    font-size: 15px;
+    line-height: 1.5;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
     .fade-in {
      animation: fadeIn 0.3s ease-in-out;
     }
@@ -80,7 +92,6 @@
     .hidden {
       display: none;
     }
-
     .chat input {
       width: 100%;
       padding: 12px;
@@ -93,6 +104,43 @@
       padding: 12px;
       font-size: 1rem;
     }
+    .btn-voice {
+     background: linear-gradient(135deg, #8e44ad, #6c3483);
+     }
+
+    .btn-chat {
+     background: linear-gradient(135deg, #2c3e50, #34495e);
+    }
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      background: #ffffff;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .action-btn:active {
+     transform: scale(0.97);
+    }
+
+   .action-btn.active {
+     background: #eaeaea;
+     font-weight: 600;
+   }
   </style>
 </head>
 <body>
@@ -106,12 +154,14 @@
   </p>
 
   <div class="actions">
-    <button onclick="mostrarHistoria()">📜 Storia dell’oggetto</button>
-    <button onclick="mostrarSignificado()">🎨 Cosa significa?</button>
-    <button onclick="mostrarProceso()">🛠️ Come è stato creato?</button>
-    <button onclick="mostrarChat()">💬 Chiedi all'IA</button>
-    <button onclick="iniciarVoz()">🎤 Parlare</button>
+  <button class="action-btn" onclick="activarBoton(this); mostrarHistoria()">📜 Storia dell’oggetto</button>
+  <button class="action-btn" onclick="activarBoton(this); mostrarSignificado()">🎨 Cosa significa?</button>
+  <button class="action-btn" onclick="activarBoton(this); mostrarProceso()">🛠️ Come è stato creato?</button>
+
+  <button class="action-btn btn-chat" onclick="activarBoton(this); mostrarChat()">💬 Chiedi all'IA</button>
+  <button class="action-btn btn-voice" onclick="activarBoton(this); iniciarVoz()">🎤 Parlare</button>
   </div>
+
 
   <div id="contenidoObjeto" class="content">
     <em>Seleziona un'opzione per visualizzare le informazioni.</em>
@@ -178,31 +228,42 @@ function mostrarChat() {
 /* =============================
    CONTENIDO FIJO
 ============================= */
-function mostrarHistoria() {
-  ocultarChat();
+
+function mostrarContenido(texto) {
   const box = document.getElementById("contenidoObjeto");
-  box.innerText = contenido.historia;
+
+  box.innerText = texto;
+
+  // Reinicia animación
   box.classList.remove("fade-in");
-  void box.offsetWidth; // reset animation
+  void box.offsetWidth;
   box.classList.add("fade-in");
 }
-
-function mostrarSignificado() {
+  
+  
+function mostrarHistoria(btn) {
+  activarBoton(btn);
   ocultarChat();
-  const box = document.getElementById("contenidoObjeto");
-  box.innerText = contenido.significatoSimbolico;
-  box.classList.remove("fade-in");
-  void box.offsetWidth; // reset animation
-  box.classList.add("fade-in");
+  mostrarContenido(contenido.historia);
 }
 
-function mostrarProceso() {
+function mostrarSignificado(btn) {
+  activarBoton(btn);
   ocultarChat();
-  const box = document.getElementById("contenidoObjeto");
-  box.innerText = contenido.processo;
-  box.classList.remove("fade-in");
-  void box.offsetWidth; // reset animation
-  box.classList.add("fade-in");
+  mostrarContenido(contenido.significatoSimbolico);
+}
+
+function mostrarProceso(btn) {
+  activarBoton(btn);
+  ocultarChat();
+  mostrarContenido(contenido.processo);
+}
+
+function activarBoton(btn) {
+  document.querySelectorAll(".action-btn").forEach(b =>
+    b.classList.remove("active")
+  );
+  btn.classList.add("active");
 }
 
 /* =============================
