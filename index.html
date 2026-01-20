@@ -275,30 +275,65 @@ function hablar(testo) {
   window.speechSynthesis.speak(speech);
 }
 
+let recognition = null;
+let escuchando = false;
+
 function iniciarVoz(btn) {
-  mostrarChat(btn);
+  // ⚠️ Todo debe ocurrir DIRECTAMENTE desde el click
+  activarBoton(btn);
+  ocultarChat();
+  mostrarChat();
 
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
 
   if (!SpeechRecognition) {
-    mostrarContenido("Riconoscimento vocale non disponibile.");
+    mostrarContenido("❌ Il riconoscimento vocale non è supportato su questo dispositivo.");
     return;
   }
 
-  const recognition = new SpeechRecognition();
+  if (escuchando) {
+    return;
+  }
+
+  recognition = new SpeechRecognition();
   recognition.lang = "it-IT";
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  escuchando = true;
+  mostrarContenido("🎤 In ascolto… parli ora.");
+
   recognition.start();
 
-  mostrarContenido("🎤 In ascolto…");
-
   recognition.onresult = (event) => {
-    document.getElementById("pregunta").value =
-      event.results[0][0].transcript;
+    const testo = event.results[0][0].transcript;
+    document.getElementById("pregunta").value = testo;
+    recognition.stop();
+    escuchando = false;
     enviarPregunta();
   };
-}
 
+  recognition.onspeechend = () => {
+    recognition.stop();
+    escuchando = false;
+  };
+
+  recognition.onerror = (event) => {
+    console.error("Speech error:", event.error);
+    escuchando = false;
+
+    let msg = "❌ Nessuna voce rilevata.";
+    if (event.error === "not-allowed") {
+      msg = "❌ Permesso microfono negato.";
+    } else if (event.error === "no-speech") {
+      msg = "❌ Nessun suono rilevato. Prova a parlare più vicino.";
+    }
+
+    mostrarContenido(msg);
+  };
+}
 /* =============================
    IA
 ============================= */
