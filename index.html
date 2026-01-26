@@ -279,73 +279,84 @@ function mostrarChat(btn) {
   document.getElementById("chat").classList.remove("hidden");
 }
 
-/* =============================
-   VOZ
+/* ============================= 
+      VOZ (OPTIMIZADO)
 ============================= */
+
+// Definir la API fuera para evitar problemas de re-instanciación
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition = null;
+let escuchando = false;
+
+// Inicializamos el objeto UNA SOLA VEZ si el navegador lo permite
+if (SpeechRecognition) {
+  recognition = new SpeechRecognition();
+  recognition.lang = "it-IT";
+  recognition.continuous = false; // Importante para iOS: mejor manejar sesiones cortas
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+}
+
 function hablar(testo) {
+  // En iOS, speechSynthesis requiere que la cola esté limpia
+  window.speechSynthesis.cancel(); 
   const speech = new SpeechSynthesisUtterance(testo);
   speech.lang = "it-IT";
   window.speechSynthesis.speak(speech);
 }
 
-let recognition = null;
-let escuchando = false;
-
 function iniciarVoz(btn) {
-  // ⚠️ Todo debe ocurrir DIRECTAMENTE desde el click
-  activarBoton(btn);
-  ocultarChat();
-  mostrarChat();
-
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-
   if (!SpeechRecognition) {
     mostrarContenido("❌ Il riconoscimento vocale non è supportato su questo dispositivo.");
     return;
   }
 
   if (escuchando) {
+    recognition.stop();
     return;
   }
 
-  recognition = new SpeechRecognition();
-  recognition.lang = "it-IT";
-  recognition.continuous = false;
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
-
-  escuchando = true;
-  mostrarContenido("🎤 In ascolto… parli ora.");
-
-  recognition.start();
+  // 1. Limpieza de interfaz
+  activarBoton(btn);
+  
+  // 2. Configuración de eventos (se asignan cada vez para asegurar el contexto actual)
+  recognition.onstart = () => {
+    escuchando = true;
+    mostrarContenido("🎤 In ascolto… parli ora.");
+  };
 
   recognition.onresult = (event) => {
     const testo = event.results[0][0].transcript;
     document.getElementById("pregunta").value = testo;
-    recognition.stop();
-    escuchando = false;
-    enviarPregunta();
-  };
-
-  recognition.onspeechend = () => {
-    recognition.stop();
-    escuchando = false;
+    enviarPregunta(); // Llamada automática
   };
 
   recognition.onerror = (event) => {
     console.error("Speech error:", event.error);
     escuchando = false;
-
-    let msg = "❌ Nessuna voce rilevata.";
-    if (event.error === "not-allowed") {
-      msg = "❌ Permesso microfono negato.";
-    } else if (event.error === "no-speech") {
-      msg = "❌ Nessun suono rilevato. Prova a parlare più vicino.";
-    }
-
-    mostrarContenido(msg);
+    
+    const errores = {
+      'not-allowed': "❌ Permesso microfono negato.",
+      'no-speech': "❌ Nessuna voce rilevata.",
+      'network': "❌ Errore di connessione."
+    };
+    
+    mostrarContenido(errores[event.error] || "❌ Errore nel riconoscimento.");
   };
+
+  recognition.onend = () => {
+    escuchando = false;
+    console.log("Reconocimiento finalizado");
+  };
+
+  // 3. El arranque debe ser el último paso tras la interacción del usuario
+  try {
+    recognition.start();
+  } catch (e) {
+    console.log("Error al iniciar: ", e);
+    // Si ya estaba corriendo, lo detenemos y reiniciamos
+    recognition.stop();
+  }
 }
 /* =============================
    IA
