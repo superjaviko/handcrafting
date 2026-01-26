@@ -110,20 +110,59 @@
 
     .btn-voice {
       background: linear-gradient(135deg, #6c3483, #4a235a);
-    }
-
+    
+    /* CHAT */
+   .chat-box {
+     background: #faf7f3;
+     padding: 20px;
+     border-radius: 20px;
+     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+   }
+      /* Input */
+   .chat-box input {
+     width: 100%;
+     padding: 14px 16px;
+     border-radius: 14px;
+     border: 1px solid #d6cfc4;
+     font-family: "Cormorant Garamond", serif;
+     font-size: 16px;
+   }
+      /* Botón */
+   .chat-box button {
+     margin-top: 14px;
+     width: 100%;
+     padding: 14px;
+     border-radius: 14px;
+     border: none;
+     background: #2b2b2b;
+     color: white;
+     font-family: inherit;
+     font-size: 16px;
+   }
+   .chat-box button:active {
+     transform: scale(0.97);
+   }
     #contenidoObjeto,
     #respuestaChat {
-      margin-top: 32px;
+      margin-top: 20px;
       padding: 16px;
-      background: #f3f6f8;
-      border-left: 4px solid #8e44ad;
+      background: #f1eee9;
+      border-left: 4px solid #c4a484;
       border-radius: 12px;
       font-size: 15px;
       text-align:justify;
       line-height: 1.5;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
+    /* Caja de contenido */
+    .contenido-box {
+      background: #faf7f3;
+      padding: 20px;
+      border-radius: 18px;
+      text-align: justify;
+      font-family: "Cormorant Garamond", serif;
+    }
+
 
     .fade-in {
       animation: fadeIn 0.3s ease-in-out;
@@ -161,6 +200,10 @@
       color: #fff;
       cursor: pointer;
     }
+    /* Vistas */
+    .vista {
+      width: 100%;
+    }
 
     
   </style>
@@ -190,25 +233,33 @@
       <button class="action-btn" onclick="mostrarTecnica(this)">🛠️ Tecniche utilizzate</button>
     </div>
 
-    <div id="contenidoObjeto">
-      <em>Scopri cosa racconta questo oggetto.</em>
-    </div>
+    <!-- VISTA CONTENIDO -->
+<div id="vista-contenido" class="vista">
+  <div id="contenidoObjeto" class="contenido-box">
+    <em>Scopri cosa racconta questo oggetto.</em>
+  </div>
+</div>
 
-    <!-- CHAT -->
-    <div id="chat" class="chat hidden">
-      <input
-        type="text"
-        id="pregunta"
-        placeholder="Scrivi la tua domanda su questo articolo..."
-      />
+<!-- VISTA CHAT -->
+<div id="vista-chat" class="vista hidden">
+  <div class="chat-box">
+    <input
+      type="text"
+      id="pregunta"
+      placeholder="Parla con l’oggetto…"
+      oninput="mostrarInvia()"
+    />
 
-      <button id="btnInvia" onclick="enviarPregunta()">Invia domanda</button>
+    <button id="btnInvia" onclick="enviarPregunta()" class="hidden">
+      Invia domanda
+    </button>
 
-      <div id="respuestaChat">
-        <em>Risposta.</em>
-      </div>
+    <div id="respuestaChat">
+      <em>Risposta.</em>
     </div>
   </div>
+</div>
+
 
 <script>
 let contenido = {};
@@ -238,12 +289,10 @@ function activarBoton(btn) {
 }
 
 function mostrarContenido(texto) {
+  ocultarChat();
   const box = document.getElementById("contenidoObjeto");
-
-  if (!texto) {
-    box.innerHTML = "<em>Contenuto non disponibile.</em>";
-    return;
-  }
+  box.innerText = texto;
+}
 
   box.innerText = texto;
   box.classList.remove("fade-in");
@@ -252,7 +301,8 @@ function mostrarContenido(texto) {
 }
 
 function ocultarChat() {
-  document.getElementById("chat").classList.add("hidden");
+  document.getElementById("vista-chat").classList.add("hidden");
+  document.getElementById("vista-contenido").classList.remove("hidden");
 }
 
 /* =============================
@@ -276,10 +326,13 @@ function mostrarProceso(btn) {
   mostrarContenido(contenido.processo);
 }
 
-function mostrarChat(btn) {
-  activarBoton(btn);
-  document.getElementById("contenidoObjeto").innerHTML = "";
-  document.getElementById("chat").classList.remove("hidden");
+function mostrarChat() {
+  document.getElementById("vista-contenido").classList.add("hidden");
+  document.getElementById("vista-chat").classList.remove("hidden");
+
+  document.getElementById("pregunta").value = "";
+  document.getElementById("respuestaChat").innerHTML = "<em>Risposta.</em>";
+  document.getElementById("btnInvia").classList.add("hidden");
 }
 
 /* ============================= 
