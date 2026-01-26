@@ -116,7 +116,8 @@
     #respuestaChat {
       margin-top: 32px;
       padding: 16px;
-      background: #f8f8f8;
+      background: #f3f6f8;
+      border-left: 4px solid #8e44ad;
       border-radius: 12px;
       font-size: 15px;
       text-align:justify;
@@ -190,7 +191,7 @@
     </div>
 
     <div id="contenidoObjeto">
-      <em>Seleziona un'opzione per visualizzare le informazioni.</em>
+      <em>Scopri cosa racconta questo oggetto.</em>
     </div>
 
     <!-- CHAT -->
@@ -324,7 +325,7 @@ function iniciarVoz(btn) {
   // 2. Configuración de eventos (se asignan cada vez para asegurar el contexto actual)
   recognition.onstart = () => {
     escuchando = true;
-    mostrarContenido("🎤 In ascolto… parli ora.");
+    mostrarContenido("🎤 Sto ascoltando…parlami.");
   };
 
   recognition.onresult = (event) => {
