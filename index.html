@@ -188,25 +188,21 @@
       <button class="action-btn" onclick="mostrarTecnica(this)">🛠️ Tecniche utilizzate</button>
     </div>
 
-    <div id="contenidoObjeto">
-      <em>Seleziona un'opzione per visualizzare le informazioni.</em>
-    </div>
+<div class="layout-wrapper">
+  
+  <div id="contenidoObjeto">
+    <em>Scopri cosa racconta questo oggetto.</em>
+  </div>
 
-    <!-- CHAT -->
-    <div id="chat" class="chat hidden">
-      <input
-        type="text"
-        id="pregunta"
-        placeholder="Scrivi la tua domanda su questo articolo..."
-      />
-
-      <button id="btnInvia" onclick="enviarPregunta()">Invia domanda</button>
-
-      <div id="respuestaChat">
-        <em>Risposta.</em>
-      </div>
+  <div id="chat" class="chat hidden">
+    <input type="text" id="pregunta" placeholder="Scrivi la tua domanda..." />
+    <button id="btnInvia" onclick="enviarPregunta()">Invia domanda</button>
+    <div id="respuestaChat">
+      <em>Risposta.</em>
     </div>
   </div>
+
+</div>
 
 <script>
 let contenido = {};
